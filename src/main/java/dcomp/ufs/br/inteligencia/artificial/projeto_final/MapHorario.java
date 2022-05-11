@@ -41,7 +41,7 @@ public class MapHorario extends CSP<Variable, String> {
 	
 	public  Boolean trabalha;
 	
-	public HashMap<String, Integer> horasDeTrabalhoDosFuncionarios = new HashMap<String, Integer>();
+	public HashMap<String, Integer> horasDeTrabalhoDosFuncionarios = new HashMap<>();
 
 	public MapHorario(HashMap<String, Integer> horasDeTrabalhoDosFuncionarios) {
 
@@ -74,7 +74,7 @@ public class MapHorario extends CSP<Variable, String> {
 
 		this.horasDeTrabalhoDosFuncionarios = horasDeTrabalhoDosFuncionarios;
 		
-		List<String> tempoDeTrabalho = new ArrayList<String>();
+		List<String> tempoDeTrabalho = new ArrayList<>();
 		
 		for (String horas : horasDeTrabalhoDosFuncionarios.keySet()) {
 			tempoDeTrabalho.add(horas);
