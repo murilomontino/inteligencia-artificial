@@ -4,41 +4,28 @@
  */
 package dcomp.ufs.br.inteligencia.artificial.projeto_final;
 
+import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Variable;
 import java.util.Arrays;
 /**
  *
  * @author muril
  */
-public class Funcionario {
-    private String nome;
-    private Integer horasDeTrabalho;
-    private String[] horasDisponiveis;
+public class Funcionario extends Variable {
+    public String nome;
+    public Integer horasDeTrabalho;
+    public String[] horasPreferenciais;
     
     
    Funcionario(
      String nome,
      Integer horasDeTrabalho,
-     String[] horasDisponiveis
+     String[] horasPreferenciais
    ){
+       super(nome);
        this.horasDeTrabalho = horasDeTrabalho;
-       this.nome = nome;
-       this.horasDisponiveis = horasDisponiveis;
+       this.horasPreferenciais = horasPreferenciais;
    }
     
-    /**
-     * @return the nome
-     */
-    public String getNome() {
-        return nome;
-    }
-
-    /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     /**
      * @return the horasDeTrabalho
      */
@@ -54,17 +41,17 @@ public class Funcionario {
     }
 
     /**
-     * @return the horasDisponiveis
+     * @return the horasPreferenciais
      */
     public String[] getHorasDisponiveis() {
-        return horasDisponiveis;
+        return horasPreferenciais;
     }
 
     /**
-     * @param horasDisponiveis the horasDisponiveis to set
+     * @param horasPreferenciais the horasPreferenciais to set
      */
-    public void setHorasDisponiveis(String[] horasDisponiveis) {
-        this.horasDisponiveis = horasDisponiveis;
+    public void setHorasDisponiveis(String[] horasPreferenciais) {
+        this.horasPreferenciais = horasPreferenciais;
     }
     
     //overriding the toString() method
@@ -74,6 +61,6 @@ public class Funcionario {
             return 
                     "Nome: " + this.nome + "\n" 
                     + "Horas de Trabalho: " + this.horasDeTrabalho  + "\n"
-                    + "Horas Disponíveis: " + Arrays.toString(horasDisponiveis);
+                    + "Horas Disponíveis: " + Arrays.toString(horasPreferenciais);
     }
 }

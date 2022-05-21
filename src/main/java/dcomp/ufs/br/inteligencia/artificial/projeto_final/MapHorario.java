@@ -36,10 +36,12 @@ public class MapHorario extends CSP<Variable, String> {
 	public static final Variable HORA_23 = new Variable("H23");
 	public static final Variable HORA_24 = new Variable("H24");
 	
-	public static final String TRABALHA = "V";
-	public static final String NAO_TRABALHA = "X";
+	public static final String OCUPADO = "OCUPADO";
+        public static final String HORARIO_PERMITIDO = "HORARIO_PERMITIDO";
 	
-	public  Boolean trabalha;
+	public Boolean ocupado;
+        public Boolean horario_permitido;
+       
 	
 	public HashMap<String, Integer> horasDeTrabalhoDosFuncionarios = new HashMap<>();
 
@@ -85,7 +87,7 @@ public class MapHorario extends CSP<Variable, String> {
 		for (Variable var : getVariables())
 			setDomain(var, horarios);
 		
-		horasDeTrabalhoDosFuncionarios.put(NAO_TRABALHA, 24);
+		horasDeTrabalhoDosFuncionarios.put(OCUPADO, 24);
 
 	}
 

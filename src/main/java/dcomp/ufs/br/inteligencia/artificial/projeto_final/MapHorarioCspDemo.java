@@ -13,16 +13,21 @@ import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.CSP;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.CspListener;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.CspSolver;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Variable;
+import java.util.List;
 
 public class MapHorarioCspDemo {
 	static Scanner input = new Scanner(System.in);
-        public ScannerListFuncionarios scanner = new ScannerListFuncionarios();
+        static ScannerListFuncionarios scanner = new ScannerListFuncionarios();
         
-        public void BackTracking(HashMap<Variable, String> caso){
-                HashMap<String, Integer> cargaEstudos = new HashMap<>(); 
+        // caso Horario -> Nome do Funcionario
+        // carga do Funcionario -> Nome do Funcionario -> Carga Horário
+        public void BackTracking(
+                HashMap<Variable, String> caso, 
+                HashMap<String, Integer> cargaDoFuncionario
+        ){
 	
-		CSP<Variable, String> csp = new MapHorario(cargaEstudos);
-
+		CSP<Variable, String> csp = new MapHorario(cargaDoFuncionario);
+                
 		CspListener.StepCounter<Variable, String> stepCounter = new CspListener.StepCounter<>();
 		CspSolver<Variable, String> solver;
 		Optional<Assignment<Variable, String>> solution;
@@ -37,127 +42,48 @@ public class MapHorarioCspDemo {
 			String separador = ";";
 			StringBuilder arquivoCsv = new StringBuilder();
 			arquivoCsv.append("HORARIOS").append(separador);
-			arquivoCsv.append("SEGUNDA").append(separador);
-			arquivoCsv.append("TERCA").append(separador);
-			arquivoCsv.append("QUARTA").append(separador);
-			arquivoCsv.append("QUINTA").append(separador);
-			arquivoCsv.append("SEXTA").append(separador);
-			arquivoCsv.append("SABADO").append(separador);
+			arquivoCsv.append("H1").append(separador);
+			arquivoCsv.append("H2").append(separador);
+			arquivoCsv.append("H3").append(separador);
+			arquivoCsv.append("H4").append(separador);
+			arquivoCsv.append("H5").append(separador);
+			arquivoCsv.append("H6").append(separador);
+                        arquivoCsv.append("H7").append(separador);
+			arquivoCsv.append("H8").append(separador);
+			arquivoCsv.append("H9").append(separador);
+			arquivoCsv.append("H10").append(separador);
+			arquivoCsv.append("H11").append(separador);
+			arquivoCsv.append("H12").append(separador);
+                        arquivoCsv.append("H13").append(separador);
+			arquivoCsv.append("H14").append(separador);
+			arquivoCsv.append("H15").append(separador);
+			arquivoCsv.append("H16").append(separador);
+			arquivoCsv.append("H17").append(separador);
+			arquivoCsv.append("H18").append(separador);
+                        arquivoCsv.append("H19").append(separador);
+			arquivoCsv.append("H20").append(separador);
+			arquivoCsv.append("H21").append(separador);
+			arquivoCsv.append("H22").append(separador);
+			arquivoCsv.append("H23").append(separador);
+			arquivoCsv.append("H24").append(separador);
 			arquivoCsv.append("\n");
 
 			for (Variable v : solution.get().getVariables()) {
-                            switch (v.getName()) {
-                                case "2M1":
-                                    arquivoCsv.append("07:00 - 07:30").append(separador);
-                                    break;
-                                case "2M2":
-                                    arquivoCsv.append("07:30 - 08:00").append(separador);
-                                    break;
-                                case "2M3":
-                                    arquivoCsv.append("08:00 - 08:30").append(separador);
-                                    break;
-                                case "2M4":
-                                    arquivoCsv.append("08:30 - 09:00").append(separador);
-                                    break;
-                                case "2M5":
-                                    arquivoCsv.append("09:00 - 09:30").append(separador);
-                                    break;
-                                case "2M6":
-                                    arquivoCsv.append("09:30 - 10:00").append(separador);
-                                    break;
-                                case "2M7":
-                                    arquivoCsv.append("10:00 - 10:30").append(separador);
-                                    break;
-                                case "2M8":
-                                    arquivoCsv.append("10:30 - 11:00").append(separador);
-                                    break;
-                                case "2M9":
-                                    arquivoCsv.append("11:00 - 11:30").append(separador);
-                                    break;
-                                case "2M10":
-                                    arquivoCsv.append("11:30 - 12:00").append(separador);
-                                    break;
-                                case "2M11":
-                                    arquivoCsv.append("12:00 - 12:30").append(separador);
-                                    break;
-                                case "2M12":
-                                    arquivoCsv.append("12:30 - 13:00").append(separador);
-                                    break;
-                                case "2T1":
-                                    arquivoCsv.append("13:00 - 13:30").append(separador);
-                                    break;
-                                case "2T2":
-                                    arquivoCsv.append("13:30 - 14:00").append(separador);
-                                    break;
-                                case "2T3":
-                                    arquivoCsv.append("14:00 - 14:30").append(separador);
-                                    break;
-                                case "2T4":
-                                    arquivoCsv.append("14:30 - 15:00").append(separador);
-                                    break;
-                                case "2T5":
-                                    arquivoCsv.append("15:00 - 15:30").append(separador);
-                                    break;
-                                case "2T6":
-                                    arquivoCsv.append("15:30 - 16:00").append(separador);
-                                    break;
-                                case "2T7":
-                                    arquivoCsv.append("16:00 - 16:30").append(separador);
-                                    break;
-                                case "2T8":
-                                    arquivoCsv.append("16:30 - 17:00").append(separador);
-                                    break;
-                                case "2T9":
-                                    arquivoCsv.append("17:00 - 17:30").append(separador);
-                                    break;
-                                case "2T10":
-                                    arquivoCsv.append("17:30 - 18:00").append(separador);
-                                    break;
-                                case "2T11":
-                                    arquivoCsv.append("18:00 - 18:30").append(separador);
-                                    break;
-                                case "2T12":
-                                    arquivoCsv.append("18:30 - 19:00").append(separador);
-                                    break;
-                                case "2Z1":
-                                    arquivoCsv.append("19:00 - 19:30").append(separador);
-                                    break;
-                                case "2Z2":
-                                    arquivoCsv.append("19:30 - 20:00").append(separador);
-                                    break;
-                                case "2Z3":
-                                    arquivoCsv.append("20:00 - 20:30").append(separador);
-                                    break;
-                                case "2Z4":
-                                    arquivoCsv.append("20:30 - 21:00").append(separador);
-                                    break;
-                                case "2Z5":
-                                    arquivoCsv.append("21:00 - 21:30").append(separador);
-                                    break;
-                                case "2Z6":
-                                    arquivoCsv.append("21:30 - 22:00").append(separador);
-                                    break;
-                                case "2Z7":
-                                    arquivoCsv.append("22:00 - 22:30").append(separador);
-                                    break;
-                                case "2Z8":
-                                    arquivoCsv.append("22:30 - 23:00").append(separador);
-                                    break;
-                                default:
-                                    break;
-                            }
-
+			
 				arquivoCsv.append(solution.get().getValue(v)).append(separador);
 
 				cont++;
 
-				if (cont == 6) {
+				if (cont == 24) {
 					arquivoCsv.append("\n");
 					cont = 0;
 				}
 			}
 
-			try (PrintWriter writer = new PrintWriter(new File("horario.csv"))) {
+			PrintWriter writer = null;
+
+			try {
+				writer = new PrintWriter(new File("horario.csv"));
 
 				writer.write(arquivoCsv.toString());
 				
@@ -167,6 +93,10 @@ public class MapHorarioCspDemo {
 				writer.close();
 			} catch (IOException e) {
 				System.out.print(e.getMessage());
+			} finally {
+				if (writer != null) {
+					writer.close();
+				}
 			}
 		} else {
 			System.out.println(
@@ -175,7 +105,7 @@ public class MapHorarioCspDemo {
 
 	}
 
-	public void setCasoDefault(HashMap<Variable, String> caso) {
+	static void setCasoDefault(HashMap<Variable, String> caso) {
 		caso.put(MapHorario.HORA_01, "-");
 		caso.put(MapHorario.HORA_02, "-");
 		caso.put(MapHorario.HORA_03, "-");
@@ -204,15 +134,21 @@ public class MapHorarioCspDemo {
 	}
         
         public static void main(String[] args) {
-            HashMap<String, Integer> cargaHorariaDosFuncionarios = new HashMap<>();
-            HashMap<String, String> horariosDisponiveisDosFuncionarios = new HashMap<>();
+            HashMap<String, Integer> cargaDoFuncionario = new HashMap<>();
             HashMap<Variable, String> caso = new LinkedHashMap<>();
-
-            MapHorarioCspDemo CspDemo = new MapHorarioCspDemo();
-                
-            CspDemo.setCasoDefault(caso);
+            setCasoDefault(caso);
             
-            CspDemo.scanner.scannerListFuncionarios();
-             
+            MapHorarioCspDemo map = new MapHorarioCspDemo();
+            List<Funcionario> funcionarios = scanner.scannerListFuncionarios();
+            
+            // nome, carga horaria
+            
+            for (Funcionario funcionario: funcionarios) {
+                cargaDoFuncionario.put(funcionario.nome, funcionario.horasDeTrabalho);
+            } 
+            
+            
+            map.BackTracking(caso, cargaDoFuncionario);
+
         }
 }

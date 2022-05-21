@@ -9,7 +9,7 @@ import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.AC3Strategy;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Assignment;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.CSP;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.CspHeuristics;
-
+import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Domain;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.InferenceLog;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.InferenceStrategy;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Variable;
@@ -25,7 +25,6 @@ import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Variable;
  *
  * @author Ruediger Lunde
  */
-
 public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends AbstractBacktrackingSolver<VAR, VAL> {
 
 	private CspHeuristics.VariableSelectionStrategy<VAR, VAL> varSelectionStrategy;
@@ -75,7 +74,7 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
 	public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp, HashMap<Variable, String> caso) {
 		if (inferenceStrategy != null) {
 			csp = csp.copyDomains(); // do not change the original CSP!
-			InferenceLog<VAR, VAL> log = inferenceStrategy.apply(csp);
+			InferenceLog log = inferenceStrategy.apply(csp);
 			if (!log.isEmpty()) {
 				fireStateChanged(csp, null, null);
 				if (log.inconsistencyFound())
@@ -101,7 +100,24 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
 	 */
 	@Override
 	protected Iterable<VAL> orderDomainValues(CSP<VAR, VAL> csp, Assignment<VAR, VAL> assignment, VAR var) {
-		return valOrderingStrategy.apply(csp, assignment, var);
+		return (valOrderingStrategy != null) ? valOrderingStrategy.apply(csp, assignment, var)
+				: sortDominios(csp.getDomain(var));
+	}
+
+	private Iterable<VAL> sortDominios(Domain<VAL> dominios) {
+		return dominios.asList().stream().sorted((dominio1, dominio2) -> compare(dominio1, dominio2))
+				.collect(Collectors.toList());
+	}
+        // CARGA HORARIA <= HORARIOS PREFERENCIAS
+        // 
+	private int compare(VAL bf, VAL bt) {
+		if (MapHorario.OCUPADO.equals(bf) || MapHorario.HORARIO_PERMITIDO.equals(bf)) {
+			return -1;
+		} else if (MapHorario.OCUPADO.equals(bt) && MapHorario.HORARIO_PERMITIDO.equals(bt)) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	/**
