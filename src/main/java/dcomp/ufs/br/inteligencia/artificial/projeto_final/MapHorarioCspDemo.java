@@ -13,7 +13,6 @@ import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.CSP;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.CspListener;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.CspSolver;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Variable;
-import java.util.List;
 
 public class MapHorarioCspDemo {
 	static Scanner input = new Scanner(System.in);
@@ -37,7 +36,9 @@ public class MapHorarioCspDemo {
 		solver.addCspListener(stepCounter);
 		stepCounter.reset();
 		solution = solver.solve(csp, caso);
-
+                
+                
+                
 		if (solution.isPresent()) {
 			String separador = ";";
 			StringBuilder arquivoCsv = new StringBuilder();
@@ -108,31 +109,31 @@ public class MapHorarioCspDemo {
 	static void setCasoDefault(
                 HashMap<Variable, String> caso
         ) {
-		caso.put(MapHorario.HORA_01, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_02, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_03, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_04, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_05, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_06, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_07, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_08, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_09, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_10, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_11, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_12, "HORARIO_LIVRE");
+		caso.put(CommonDomain.HORA_01, "-");
+		caso.put(CommonDomain.HORA_02, "-");
+		caso.put(CommonDomain.HORA_03, "-");
+		caso.put(CommonDomain.HORA_04, "-");
+		caso.put(CommonDomain.HORA_05, "-");
+		caso.put(CommonDomain.HORA_06, "-");
+		caso.put(CommonDomain.HORA_07, "-");
+		caso.put(CommonDomain.HORA_08, "-");
+		caso.put(CommonDomain.HORA_09, "-");
+		caso.put(CommonDomain.HORA_10, "-");
+		caso.put(CommonDomain.HORA_11, "-");
+		caso.put(CommonDomain.HORA_12, "-");
 
-		caso.put(MapHorario.HORA_13, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_14, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_15, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_16, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_17, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_18, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_19, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_20, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_21, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_22, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_23, "HORARIO_LIVRE");
-		caso.put(MapHorario.HORA_24, "HORARIO_LIVRE");
+		caso.put(CommonDomain.HORA_13, "-");
+		caso.put(CommonDomain.HORA_14, "-");
+		caso.put(CommonDomain.HORA_15, "-");
+		caso.put(CommonDomain.HORA_16, "-");
+		caso.put(CommonDomain.HORA_17, "-");
+		caso.put(CommonDomain.HORA_18, "-");
+		caso.put(CommonDomain.HORA_19, "-");
+		caso.put(CommonDomain.HORA_20, "-");
+		caso.put(CommonDomain.HORA_21, "-");
+		caso.put(CommonDomain.HORA_22, "-");
+		caso.put(CommonDomain.HORA_23, "-");
+		caso.put(CommonDomain.HORA_24, "-");
 	}
         
         public static void main(String[] args) {
@@ -142,32 +143,52 @@ public class MapHorarioCspDemo {
             MapHorarioCspDemo map = new MapHorarioCspDemo();
             //List<Funcionario> funcionarios = scanner.scannerListFuncionarios();
             
-            String[] horariosMateus = "1,2,3,4".split(",");
+            String[] horariosAlice = "4,13,19,21,22".split(",");
             
-            Funcionario mateus = new Funcionario(
-                    "Mateus",
-                    1,
-                    horariosMateus
+            Funcionario Alice = new Funcionario(
+                    "Alice",
+                    2,
+                    horariosAlice
             );
             
-            String[] horariosMurilo = "4,5,6,7".split(",");
+            String[] horariosBob = "6,9,10,14,15,21".split(",");
             
-            Funcionario murilo = new Funcionario(
-                    "Murilo",
+            Funcionario Bob = new Funcionario(
+                    "Bob",
                     3,
-                    horariosMurilo
+                    horariosBob
             );
             
-            String[] horariosGUI = "10,12,13,14".split(",");
+            String[] horariosCharlie = "5,8,10,13,14,21,22,23".split(",");
             
-            Funcionario gui = new Funcionario(
-                    "GUI",
+            Funcionario Charlie = new Funcionario(
+                    "Charlie",
+                    1,
+                    horariosCharlie
+            );
+            
+             String[] horariosDavid = "1,3,4,5,6,7,19,23".split(",");
+            
+            Funcionario David = new Funcionario(
+                    "David",
+                    2,
+                    horariosDavid
+            );
+            
+            
+            String[] horariosEve = "2,4,7,10,11,13,14,15,18,21".split(",");
+            
+            Funcionario Eve = new Funcionario(
+                    "Eve",
                     4,
-                    horariosGUI
+                    horariosEve
             );
-            Funcionarios.put(gui.getName(), gui);
-            Funcionarios.put(murilo.getName(), murilo);
-            Funcionarios.put(mateus.getName(), mateus);
+            
+            Funcionarios.put(David.getName(), David);
+            Funcionarios.put(Eve.getName(), Eve);
+            Funcionarios.put(Alice.getName(), Alice);
+            Funcionarios.put(Charlie.getName(), Charlie);
+            Funcionarios.put(Bob.getName(), Bob);
             //for (Funcionario funcionario: funcionarios) {
             //    Funcionarios.put(funcionario.getName(), funcionario);
             //} 

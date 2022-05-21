@@ -55,15 +55,23 @@ import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Variable;
  * @author Ruediger Lunde
  */
 public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> extends CspSolver<VAR, VAL> {
+        
 
 	/** Applies a recursive backtracking search to solve the CSP. */
 	@SuppressWarnings("unchecked")
 	public Optional<Assignment<VAR, VAL>> solve(CSP<VAR, VAL> csp, HashMap<Variable, String> caso) {
 
 		Assignment<VAR, VAL> result = null;
-	
-		result = backtrackHorario((MapHorario) csp, new Assignment<VAR, VAL>(), (HashMap<VAR, VAL>) caso);
-
+               
+                MapHorario aux = (MapHorario) csp;
+               
+		result = backtrackHorario(
+                        aux, 
+                        new Assignment<VAR, VAL>(), 
+                        (HashMap<VAR, VAL>) caso
+                );
+                
+                
 		return result != null ? Optional.of(result) : Optional.empty();
 	}
 
@@ -106,48 +114,56 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
 	private Assignment<VAR, VAL> backtrackHorario(
                 MapHorario csp, Assignment<VAR, VAL> assignment,
 		HashMap<VAR, VAL> caso
+               
         ) {
-            
-		Assignment<VAR, VAL> result = null;
-		if (assignment.isComplete((List<VAR>) csp.getVariables()) || Tasks.currIsCancelled()) {
-			return assignment;
-		} 
                 
+		Assignment<VAR, VAL> result = null;
+		if (   assignment.isComplete((List<VAR>) csp.getVariables())
+                       || 
+                       Tasks.currIsCancelled()
+                       ) {
+			return assignment;
+		}
+                 
                 VAR hora = selectUnassignedVariable((CSP<VAR, VAL>) csp, assignment);
                 for (VAL name : orderDomainValues((CSP<VAR, VAL>) csp, assignment, hora)) {
-                        if (caso.containsKey(hora)) {
-                            
-                            if (!caso.get(hora).equals("HORARIO_LIVRE")) {
-                                    assignment.add(hora, caso.get(hora));
-                                    return backtrackHorario(csp, assignment, caso);
-                            } 
-                            
-                            Funcionario funcionario = csp.Funcionarios.get(name);
-                            
-                            if (funcionario.horasDeTrabalho > 0) {
-                                String h = hora.toString().replace("H", "");
-                                
-                                if (funcionario.horarioPermitido(h)){
-                                    Integer proximo = funcionario.horasDeTrabalho - 1;
-                                    funcionario.setHorasDeTrabalho(proximo);
-                                    csp.Funcionarios.put((String) name, funcionario);
-                                    assignment.add(hora,(VAL) name.toString());
-                                    return backtrackHorario(csp, assignment, caso); 
-                                } 
-                                
-                            }
-                            
-                            assignment.add(hora, (VAL) caso.get(hora));
-                            return backtrackHorario(csp, assignment, caso); 
-   
+                    System.out.println(name);
+
+                    if (caso.containsKey(hora)) {
+
+                        if (!caso.get(hora).equals("-")) {
+                                assignment.add(hora, caso.get(hora));
+                                return backtrackHorario(csp, assignment, caso);
+                        } 
+
+                        Funcionario funcionario = csp.Funcionarios.get(name);
+
+                        if (funcionario.horasDeTrabalho == 0){
+                            continue;
                         }
-                        if (assignment.isComplete((List<VAR>) csp.getVariables()))
-                                break;
-                }
 
+                        String h = hora.toString().replace("H", "");
+
+                        if (funcionario.horarioPermitido(h)){
+                            Integer proximo = funcionario.horasDeTrabalho - 1;
+
+                            funcionario.setHorasDeTrabalho(proximo);
+                            csp.Funcionarios.put((String) name, funcionario);
+
+                            assignment.add(hora,(VAL) name.toString());
+                            return backtrackHorario(csp, assignment, caso); 
+
+                        }
+
+                        assignment.add(hora, (VAL) caso.get(hora));
+                        return backtrackHorario(csp, assignment, caso); 
+
+
+                    }
+                
 		
-
-		return result;
+                }
+                return result;
 	}
 
 	/**
