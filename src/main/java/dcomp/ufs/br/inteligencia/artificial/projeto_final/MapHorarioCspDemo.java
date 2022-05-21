@@ -23,7 +23,7 @@ public class MapHorarioCspDemo {
         // carga do Funcionario -> Nome do Funcionario -> Carga Horário
         public void BackTracking(
                 HashMap<Variable, String> caso, 
-                HashMap<String, Integer> cargaDoFuncionario
+                HashMap<String, Funcionario> cargaDoFuncionario
         ){
 	
 		CSP<Variable, String> csp = new MapHorario(cargaDoFuncionario);
@@ -74,7 +74,7 @@ public class MapHorarioCspDemo {
 
 				cont++;
 
-				if (cont == 24) {
+				if (cont == 23) {
 					arquivoCsv.append("\n");
 					cont = 0;
 				}
@@ -105,38 +105,39 @@ public class MapHorarioCspDemo {
 
 	}
 
-	static void setCasoDefault(HashMap<Variable, String> caso) {
-		caso.put(MapHorario.HORA_01, "-");
-		caso.put(MapHorario.HORA_02, "-");
-		caso.put(MapHorario.HORA_03, "-");
-		caso.put(MapHorario.HORA_04, "-");
-		caso.put(MapHorario.HORA_05, "-");
-		caso.put(MapHorario.HORA_06, "-");
-		caso.put(MapHorario.HORA_07, "-");
-		caso.put(MapHorario.HORA_08, "-");
-		caso.put(MapHorario.HORA_09, "-");
-		caso.put(MapHorario.HORA_10, "-");
-		caso.put(MapHorario.HORA_11, "-");
-		caso.put(MapHorario.HORA_12, "-");
+	static void setCasoDefault(
+                HashMap<Variable, String> caso
+        ) {
+		caso.put(MapHorario.HORA_01, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_02, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_03, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_04, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_05, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_06, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_07, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_08, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_09, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_10, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_11, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_12, "HORARIO_LIVRE");
 
-		caso.put(MapHorario.HORA_13, "-");
-		caso.put(MapHorario.HORA_14, "-");
-		caso.put(MapHorario.HORA_15, "-");
-		caso.put(MapHorario.HORA_16, "-");
-		caso.put(MapHorario.HORA_17, "-");
-		caso.put(MapHorario.HORA_18, "-");
-		caso.put(MapHorario.HORA_19, "-");
-		caso.put(MapHorario.HORA_20, "-");
-		caso.put(MapHorario.HORA_21, "-");
-		caso.put(MapHorario.HORA_22, "-");
-		caso.put(MapHorario.HORA_23, "-");
-		caso.put(MapHorario.HORA_24, "-");
+		caso.put(MapHorario.HORA_13, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_14, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_15, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_16, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_17, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_18, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_19, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_20, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_21, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_22, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_23, "HORARIO_LIVRE");
+		caso.put(MapHorario.HORA_24, "HORARIO_LIVRE");
 	}
         
         public static void main(String[] args) {
-            HashMap<String, Integer> cargaDoFuncionario = new HashMap<>();
+            HashMap<String, Funcionario> Funcionarios = new HashMap<>();
             HashMap<Variable, String> caso = new LinkedHashMap<>();
-            setCasoDefault(caso);
             
             MapHorarioCspDemo map = new MapHorarioCspDemo();
             List<Funcionario> funcionarios = scanner.scannerListFuncionarios();
@@ -144,11 +145,12 @@ public class MapHorarioCspDemo {
             // nome, carga horaria
             
             for (Funcionario funcionario: funcionarios) {
-                cargaDoFuncionario.put(funcionario.nome, funcionario.horasDeTrabalho);
+                Funcionarios.put(funcionario.getName(), funcionario);
             } 
             
+            setCasoDefault(caso);
             
-            map.BackTracking(caso, cargaDoFuncionario);
+            map.BackTracking(caso, Funcionarios);
 
         }
 }

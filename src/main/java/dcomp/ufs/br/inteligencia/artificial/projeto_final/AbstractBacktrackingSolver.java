@@ -105,36 +105,47 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
 	@SuppressWarnings("unchecked")
 	private Assignment<VAR, VAL> backtrackHorario(MapHorario csp, Assignment<VAR, VAL> assignment,
 			HashMap<VAR, VAL> caso) {
+            
 		Assignment<VAR, VAL> result = null;
 		if (assignment.isComplete((List<VAR>) csp.getVariables()) || Tasks.currIsCancelled()) {
-			result = assignment;
-		} else {
-			VAR var = selectUnassignedVariable((CSP<VAR, VAL>) csp, assignment);
-			for (VAL value : orderDomainValues((CSP<VAR, VAL>) csp, assignment, var)) {
-				if (caso.containsKey(var)) {
+			return assignment;
+		} 
+                
+                VAR hora = selectUnassignedVariable((CSP<VAR, VAL>) csp, assignment);
+                for (VAL name : orderDomainValues((CSP<VAR, VAL>) csp, assignment, hora)) {
+                        if (caso.containsKey(hora)) {
+                            
+                        
+                            
+                            if (!caso.get(hora).equals("HORARIO_LIVRE")) {
+                                    assignment.add(hora, caso.get(hora));
+                                    return backtrackHorario(csp, assignment, caso);
+                            } 
+                            
+                            Funcionario funcionario = csp.Funcionarios.get(name);
+                            
+                            if (funcionario.horasDeTrabalho > 0) {
+                                String h = hora.toString().replace("H", "");
+                                
+                                if (funcionario.horarioPermitido(h)){
+                                    Integer proximo = funcionario.horasDeTrabalho - 1;
+                                    funcionario.setHorasDeTrabalho(proximo);
+                                    csp.Funcionarios.put((String) name, funcionario);
+                                    assignment.add(hora,(VAL) name.toString());
+                                    return backtrackHorario(csp, assignment, caso); 
+                                } 
+                                
+                            }
+                            
+                            assignment.add(hora, (VAL) caso.get(hora));
+                            return backtrackHorario(csp, assignment, caso); 
+   
+                        }
+                        if (assignment.isComplete((List<VAR>) csp.getVariables()))
+                                break;
+                }
 
-					if (!caso.get(var).equals("-")) {
-
-						assignment.add(var, caso.get(var));
-						result = backtrackHorario(csp, assignment, caso);
-
-					} else if (csp.horasDeTrabalhoDosFuncionarios.get(value) > 0) {
-
-						if (var.getName().charAt(0) == '7') {
-							assignment.add(var, (VAL) MapHorario.NAO_TRABALHA);
-						} else {
-							csp.horasDeTrabalhoDosFuncionarios.put((String) value,
-									csp.horasDeTrabalhoDosFuncionarios.get(value) - 1);
-							assignment.add(var, value);
-						}
-					}
-					result = backtrackHorario(csp, assignment, caso);
-				}
-				if (assignment.isComplete((List<VAR>) csp.getVariables()))
-					break;
-			}
-
-		}
+		
 
 		return result;
 	}

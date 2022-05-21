@@ -6,22 +6,22 @@ package dcomp.ufs.br.inteligencia.artificial.projeto_final;
 
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Variable;
 import java.util.Arrays;
+import java.util.List;
 /**
  *
  * @author muril
  */
 public class Funcionario extends Variable {
-    public String nome;
     public Integer horasDeTrabalho;
     public String[] horasPreferenciais;
     
     
    Funcionario(
-     String nome,
+     String name,
      Integer horasDeTrabalho,
      String[] horasPreferenciais
    ){
-       super(nome);
+       super(name);
        this.horasDeTrabalho = horasDeTrabalho;
        this.horasPreferenciais = horasPreferenciais;
    }
@@ -54,12 +54,17 @@ public class Funcionario extends Variable {
         this.horasPreferenciais = horasPreferenciais;
     }
     
+    public boolean horarioPermitido(String horario) {
+        List<String> lista = Arrays.asList(this.horasPreferenciais);
+        return lista.contains(horario);
+    }
+    
     //overriding the toString() method
     @Override
     public String toString()
     {
             return 
-                    "Nome: " + this.nome + "\n" 
+                    "Nome: " + this.getName() + "\n" 
                     + "Horas de Trabalho: " + this.horasDeTrabalho  + "\n"
                     + "Horas Disponíveis: " + Arrays.toString(horasPreferenciais);
     }
