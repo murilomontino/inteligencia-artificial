@@ -11,6 +11,7 @@ import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.InferenceLog
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Tasks;
 import dcomp.ufs.br.inteligencia.artificial.projeto_final.aima.core.Variable;
 
+
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Figure 6.5, Page
  * 215.<br>
@@ -118,52 +119,47 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
         ) {
                 
 		Assignment<VAR, VAL> result = null;
-		if (   assignment.isComplete((List<VAR>) csp.getVariables())
+                
+                
+		if (   
+                       assignment.isComplete((List<VAR>) csp.getVariables())
                        || 
                        Tasks.currIsCancelled()
                        ) {
 			return assignment;
 		}
-                 
                 VAR hora = selectUnassignedVariable((CSP<VAR, VAL>) csp, assignment);
+          
                 for (VAL name : orderDomainValues((CSP<VAR, VAL>) csp, assignment, hora)) {
-                    System.out.println(name);
-
+                    Funcionario funcionario = csp.Funcionarios.get(name);
+                    String h = hora.toString().replace("H", "");
+                        
                     if (caso.containsKey(hora)) {
-
+                        
                         if (!caso.get(hora).equals("-")) {
-                                assignment.add(hora, caso.get(hora));
-                                return backtrackHorario(csp, assignment, caso);
+                            assignment.add(hora, caso.get(hora));
+                            return backtrackHorario(csp, assignment, caso);
                         } 
-
-                        Funcionario funcionario = csp.Funcionarios.get(name);
-
-                        if (funcionario.horasDeTrabalho == 0){
+                        
+                        if (funcionario.horasDeTrabalho == 0 || !funcionario.horarioPermitido(h)){
                             continue;
-                        }
+                        } 
+                        
 
-                        String h = hora.toString().replace("H", "");
+                        
+                        Integer proximo = funcionario.horasDeTrabalho - 1;
 
-                        if (funcionario.horarioPermitido(h)){
-                            Integer proximo = funcionario.horasDeTrabalho - 1;
+                        funcionario.setHorasDeTrabalho(proximo);
+                        csp.Funcionarios.put((String) name, funcionario);
 
-                            funcionario.setHorasDeTrabalho(proximo);
-                            csp.Funcionarios.put((String) name, funcionario);
-
-                            assignment.add(hora,(VAL) name.toString());
-                            return backtrackHorario(csp, assignment, caso); 
-
-                        }
-
-                        assignment.add(hora, (VAL) caso.get(hora));
-                        return backtrackHorario(csp, assignment, caso); 
-
-
+                        assignment.add(hora,(VAL) name.toString());
+                        return backtrackHorario(csp, assignment, caso);    
                     }
-                
-		
+                   
                 }
-                return result;
+                
+                assignment.add(hora, caso.get(hora));
+                return backtrackHorario(csp, assignment, caso);  
 	}
 
 	/**
