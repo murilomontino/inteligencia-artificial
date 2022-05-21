@@ -109,12 +109,11 @@ public class FlexibleBacktrackingSolver<VAR extends Variable, VAL> extends Abstr
 				.collect(Collectors.toList());
 	}
         // CARGA HORARIA <= HORARIOS PREFERENCIAS
-        // 
-	private int compare(VAL bf, VAL bt) {
+	private int compare(VAL bf, VAL bt) {            
 		if (MapHorario.TRABALHA.equals(bf)) {
-			return -1;
-		} else if (MapHorario.TRABALHA.equals(bt)) {
 			return 1;
+		} else if (MapHorario.TRABALHA.equals(bt)) {
+			return -1;
 		} else {
 			return 0;
 		}

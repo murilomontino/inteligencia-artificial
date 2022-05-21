@@ -140,13 +140,37 @@ public class MapHorarioCspDemo {
             HashMap<Variable, String> caso = new LinkedHashMap<>();
             
             MapHorarioCspDemo map = new MapHorarioCspDemo();
-            List<Funcionario> funcionarios = scanner.scannerListFuncionarios();
+            //List<Funcionario> funcionarios = scanner.scannerListFuncionarios();
             
-            // nome, carga horaria
+            String[] horariosMateus = "1,2,3,4".split(",");
             
-            for (Funcionario funcionario: funcionarios) {
-                Funcionarios.put(funcionario.getName(), funcionario);
-            } 
+            Funcionario mateus = new Funcionario(
+                    "Mateus",
+                    1,
+                    horariosMateus
+            );
+            
+            String[] horariosMurilo = "4,5,6,7".split(",");
+            
+            Funcionario murilo = new Funcionario(
+                    "Murilo",
+                    3,
+                    horariosMurilo
+            );
+            
+            String[] horariosGUI = "10,12,13,14".split(",");
+            
+            Funcionario gui = new Funcionario(
+                    "GUI",
+                    4,
+                    horariosGUI
+            );
+            Funcionarios.put(gui.getName(), gui);
+            Funcionarios.put(murilo.getName(), murilo);
+            Funcionarios.put(mateus.getName(), mateus);
+            //for (Funcionario funcionario: funcionarios) {
+            //    Funcionarios.put(funcionario.getName(), funcionario);
+            //} 
             
             setCasoDefault(caso);
             

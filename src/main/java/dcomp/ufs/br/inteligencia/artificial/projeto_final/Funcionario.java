@@ -64,8 +64,9 @@ public class Funcionario extends Variable {
     public String toString()
     {
             return 
-                    "Nome: " + this.getName() + "\n" 
-                    + "Horas de Trabalho: " + this.horasDeTrabalho  + "\n"
-                    + "Horas Disponíveis: " + Arrays.toString(horasPreferenciais);
+                    "Nome: " + this.getName() 
+                    + " HT: " + this.horasDeTrabalho
+                    + " HP: " + Arrays.toString(horasPreferenciais)
+                    + "\n";
     }
 }

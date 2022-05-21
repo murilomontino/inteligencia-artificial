@@ -103,8 +103,10 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
 	}
 
 	@SuppressWarnings("unchecked")
-	private Assignment<VAR, VAL> backtrackHorario(MapHorario csp, Assignment<VAR, VAL> assignment,
-			HashMap<VAR, VAL> caso) {
+	private Assignment<VAR, VAL> backtrackHorario(
+                MapHorario csp, Assignment<VAR, VAL> assignment,
+		HashMap<VAR, VAL> caso
+        ) {
             
 		Assignment<VAR, VAL> result = null;
 		if (assignment.isComplete((List<VAR>) csp.getVariables()) || Tasks.currIsCancelled()) {
@@ -114,8 +116,6 @@ public abstract class AbstractBacktrackingSolver<VAR extends Variable, VAL> exte
                 VAR hora = selectUnassignedVariable((CSP<VAR, VAL>) csp, assignment);
                 for (VAL name : orderDomainValues((CSP<VAR, VAL>) csp, assignment, hora)) {
                         if (caso.containsKey(hora)) {
-                            
-                        
                             
                             if (!caso.get(hora).equals("HORARIO_LIVRE")) {
                                     assignment.add(hora, caso.get(hora));
